@@ -1,4 +1,11 @@
 
+"""
+libraries needed:
+pip install pytesseract 0.3.0
+pip install opencv-python 4.1.2.30
+pip install pdf2image 1.10.0
+pip install numpy 1.17.4
+"""
 import pytesseract as ocr
 from PIL import Image
 import cv2
