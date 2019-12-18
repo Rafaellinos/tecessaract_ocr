@@ -53,7 +53,8 @@ def read_img(treated_files):
     remove_tmp_files(treated_files)
     return result
 
-
+if not os.path.exists("tmp/"):
+    os.makedirs("tmp/")
 files = convert_img("tmp/Alvará.pdf")
 treated_files = treat_img(files)
 print(read_img(treated_files))
