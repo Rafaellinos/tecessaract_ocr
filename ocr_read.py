@@ -29,13 +29,13 @@ def treat_img(files):
     print("Treating files...")
     treated_files = []
     for file in files:
-        img = cv2.imread(file)
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        img = cv2.cvtColor(cv2.imread(file), cv2.COLOR_BGR2GRAY)
         kernel = np.ones((1, 1), np.uint8)
-        img = cv2.dilate(gray, kernel, iterations=1)
-        img = cv2.erode(gray, kernel, iterations=1)
-        cv2.imwrite("gray"+file, gray)
-        treated_files.append("gray"+file)
+        img = cv2.dilate(img, kernel, iterations=1)
+        img = cv2.erode(img, kernel, iterations=1)
+        file_name = file[:4]+"gray_"+file[4:]
+        cv2.imwrite(file_name, img)
+        treated_files.append(file_name)
     remove_tmp_files(files)
     return treated_files
 
@@ -47,13 +47,16 @@ def remove_tmp_files(files_names):
 def read_img(treated_files):
     print("Reading files...")
     result = ""
+    print(treated_files)
     for file in treated_files:
         result += ocr.image_to_string(Image.open(file), lang='por')
     remove_tmp_files(treated_files)
     return result
 
 
-#pdf_file = "Alvará.pdf"
-files = convert_img("Alvará.pdf")
+files = convert_img("tmp/Alvará.pdf")
 treated_files = treat_img(files)
 print(read_img(treated_files))
+
+#treated_files = treat_img(["phrase.png"])
+#print(read_img(treated_files))
