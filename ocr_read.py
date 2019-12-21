@@ -5,6 +5,10 @@ pip install pytesseract 0.3.0
 pip install opencv-python 4.1.2.30
 pip install pdf2image 1.10.0
 pip install numpy 1.17.4
+
+
+sudo apt install tesseract-ocr
+usr/share/tesseract-ocr/4.00/tessdata# cp -R /home/rafael/Documents/gits/tecessaract_ocr/por.traineddata .
 """
 import pytesseract as ocr
 from PIL import Image
@@ -53,11 +57,22 @@ def read_img(treated_files):
     remove_tmp_files(treated_files)
     return result
 
-if not os.path.exists("tmp/"):
-    os.makedirs("tmp/")
-files = convert_img("tmp/Alvará.pdf")
-treated_files = treat_img(files)
-print(read_img(treated_files))
+def create_text_file(text,file_name):
+    try:
+        f = open(f"{file_name}.txt","w+")
+        f.write(text)
+        f.close()
+        return True
+    except Exception as e:
+        print("Error: "+str(e))
+        return
 
-#treated_files = treat_img(["phrase.png"])
+#if not os.path.exists("tmp/"):
+#   os.makedirs("tmp/")
+files = convert_img("tmp/test_ocr.pdf")
+treated_files = treat_img(files)
+create_text_file(read_img(treated_files),"texto_teste1")
 #print(read_img(treated_files))
+
+#treated_files = treat_img(["/tmp"])
+#print(read_img(["tmp/gray_test_ocr-1.png"]))
