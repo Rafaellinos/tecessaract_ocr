@@ -6,7 +6,7 @@ pip install opencv-python 4.1.2.30
 pip install pdf2image 1.10.0
 pip install numpy 1.17.4
 
-
+virtualenv -p python3 ocr_env
 sudo apt install tesseract-ocr
 usr/share/tesseract-ocr/4.00/tessdata# cp -R /home/rafael/Documents/gits/tecessaract_ocr/por.traineddata .
 """
@@ -19,14 +19,12 @@ import numpy as np
 
 def convert_img(pdf_file):
     print("Converting files...")
-    page_num = 1
     pdf_pages = convert_from_path(pdf_file, 200)
     files = []
-    for page in pdf_pages:
+    for page_num, page in enumerate(pdf_pages, start=1):
         file_name = f"{pdf_file.replace('.pdf','')}-{page_num}.png"
         files.append(file_name)
         page.save(file_name,"PNG")
-        page_num += 1
     return files
 
 def treat_img(files):
@@ -64,14 +62,14 @@ def create_text_file(text,file_name):
         f.close()
         return True
     except Exception as e:
-        print("Error: "+str(e))
+        print("Error: \n"+str(e))
         return
 
 #if not os.path.exists("tmp/"):
 #   os.makedirs("tmp/")
-files = convert_img("tmp/test_ocr.pdf")
+files = convert_img("tmp/alvara.pdf")
 treated_files = treat_img(files)
-create_text_file(read_img(treated_files),"texto_teste1")
+create_text_file(read_img(treated_files),"texto_teste2")
 #print(read_img(treated_files))
 
 #treated_files = treat_img(["/tmp"])
