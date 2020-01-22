@@ -57,9 +57,8 @@ def read_img(treated_files):
 
 def create_text_file(text,file_name):
     try:
-        f = open(f"{file_name}.txt","w+")
-        f.write(text)
-        f.close()
+        with open(f"{file_name}.txt","w+") as f:
+            f.write(text)
         return True
     except Exception as e:
         print("Error: \n"+str(e))
