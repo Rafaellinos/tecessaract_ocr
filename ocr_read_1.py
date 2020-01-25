@@ -24,17 +24,17 @@ def b64pdf_blobpdf(base_64_pdf):
         print(f"Error: {err}")
     
 
-def blobpdf_img(blog_pdf):
+def blobpdf_img(blob_pdf):
     # open blob pdf by using wand and convert into png
-    image_pdf = Image(blob=blog_pdf, resolution=300)
+    image_pdf = Image(blob=blob_pdf, resolution=300)
     image_png = image_pdf.convert('png')
-    # return a list of blog images converted from pdf pages
+    # return a list of blob images converted from pdf pages
     return list(map(lambda img: Image(image=img).make_blob('png'), image_png.sequence))
 
 
-def treat_img(bytes_img):
+def treat_img(blob_img):
     # open png img by using imdecode and np.frombuffer
-    img = cv2.cvtColor(cv2.imdecode(np.frombuffer(bytes_img, np.uint8), -1), cv2.COLOR_BGR2GRAY)
+    img = cv2.cvtColor(cv2.imdecode(np.frombuffer(blob_img, np.uint8), -1), cv2.COLOR_BGR2GRAY)
     kernel = np.ones((1, 1), np.uint8)
     img = cv2.dilate(img, kernel, iterations=1)
     img = cv2.erode(img, kernel, iterations=1)
