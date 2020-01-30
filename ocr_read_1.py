@@ -29,7 +29,7 @@ def blobpdf_img(blob_pdf):
     image_pdf = Image(blob=blob_pdf, resolution=300)
     image_png = image_pdf.convert('png')
     # return a list of blob images converted from pdf pages
-    return list(map(lambda img: Image(image=img).make_blob('png'), image_png.sequence))
+    return [Image(image=img).make_blob('png') for img in image_png.sequence]
 
 
 def treat_img(blob_img):
